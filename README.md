@@ -29,7 +29,7 @@ See our documentation on [kubernetes.io].
 
 Take a free course on [Scalable Microservices with Kubernetes].
 
-To use Kubernetes code as a library in other applications, see the [list of published components](https://git.k8s.io/kubernetes/staging/README.md).
+To use Kubernetes code as a library in other applications, see the [list of published components](https://github.com/Unity-Billal-mesloub/kubernetes/edit/main/README.md).
 Use of the `k8s.io/kubernetes` module or `k8s.io/kubernetes/...` packages as libraries is not supported.
 
 ## To start developing K8s
