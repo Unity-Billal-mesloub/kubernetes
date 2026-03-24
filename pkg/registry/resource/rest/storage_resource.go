@@ -32,6 +32,7 @@ import (
 	devicetaintrulestore "k8s.io/kubernetes/pkg/registry/resource/devicetaintrule/storage"
 	resourceclaimstore "k8s.io/kubernetes/pkg/registry/resource/resourceclaim/storage"
 	resourceclaimtemplatestore "k8s.io/kubernetes/pkg/registry/resource/resourceclaimtemplate/storage"
+	resourcepoolstatusrequeststore "k8s.io/kubernetes/pkg/registry/resource/resourcepoolstatusrequest/storage"
 	resourceslicestore "k8s.io/kubernetes/pkg/registry/resource/resourceslice/storage"
 )
 
@@ -126,6 +127,15 @@ func (p RESTStorageProvider) v1alpha3Storage(apiResourceConfigSource serverstora
 		storage[resource+"/status"] = deviceTaintStatusStorage
 	}
 
+	if resource := "resourcepoolstatusrequests"; apiResourceConfigSource.ResourceEnabled(resourcev1alpha3.SchemeGroupVersion.WithResource(resource)) {
+		resourcePoolStatusRequestStorage, resourcePoolStatusRequestStatusStorage, err := resourcepoolstatusrequeststore.NewREST(restOptionsGetter)
+		if err != nil {
+			return nil, err
+		}
+		storage[resource] = resourcePoolStatusRequestStorage
+		storage[resource+"/status"] = resourcePoolStatusRequestStatusStorage
+	}
+
 	return storage, nil
 }
 
@@ -177,6 +187,15 @@ func (p RESTStorageProvider) v1beta2Storage(apiResourceConfigSource serverstorag
 			return nil, err
 		}
 		storage[resource] = deviceclassStorage
+	}
+
+	if resource := "devicetaintrules"; apiResourceConfigSource.ResourceEnabled(resourcev1beta2.SchemeGroupVersion.WithResource(resource)) {
+		deviceTaintRuleStorage, deviceTaintRuleStatusStorage, err := devicetaintrulestore.NewREST(restOptionsGetter)
+		if err != nil {
+			return nil, err
+		}
+		storage[resource] = deviceTaintRuleStorage
+		storage[resource+"/status"] = deviceTaintRuleStatusStorage
 	}
 
 	if resource := "resourceclaims"; apiResourceConfigSource.ResourceEnabled(resourcev1beta2.SchemeGroupVersion.WithResource(resource)) {
