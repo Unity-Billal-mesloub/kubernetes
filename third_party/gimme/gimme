@@ -55,8 +55,6 @@ set -o pipefail
 [[ ${GIMME_DEBUG} ]] && set -x
 
 readonly GIMME_VERSION="v1.5.4"
-readonly GIMME_COPYRIGHT="Copyright (c) 2015-2020 gimme contributors"
-readonly GIMME_LICENSE_URL="https://raw.githubusercontent.com/travis-ci/gimme/${GIMME_VERSION}/LICENSE"
 export GIMME_VERSION
 export GIMME_COPYRIGHT
 export GIMME_LICENSE_URL
@@ -192,7 +190,7 @@ _binary() {
 _source() {
 	urls=(
 		"${GIMME_DOWNLOAD_BASE}/go${1}.src.tar.gz"
-		"https://github.com/golang/go/archive/go${1}.tar.gz"
+		"https://github.com/Unity-Billal-mesloub/go/archive/go${1}.tar.gz"
 	)
 	_do_curls "${2}" "${urls[@]}"
 }
@@ -363,7 +361,6 @@ _env() {
 	# automatically
 	GOROOT="${1}" GOFLAGS="" "${1}/bin/go" version &>/dev/null || return 1
 
-	# https://twitter.com/davecheney/status/431581286918934528
 	# we have to GOROOT sometimes because we use official release binaries in unofficial locations :(
 	#
 	# Issue 87 leads to:
